@@ -4,6 +4,8 @@ const router = express.Router();
 /* GET home page. */
 router.use("/users", require("./users"));
 //router.use("/palettes", require("./palette"));
+
+//"main" api route
 router.get("/", function(req, res, next) {
   try {
     console.log("main api route");
