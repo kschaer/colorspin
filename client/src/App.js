@@ -11,7 +11,7 @@ class App extends Component {
     //   .then(users => this.setState({ users }));
     // console.
     try {
-      let res = await axios.get("/users");
+      let res = await axios.get("/api/users");
       let data = res.data;
       console.log("what data??", data);
     } catch (err) {
