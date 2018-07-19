@@ -3,7 +3,8 @@ const router = express.Router();
 
 /* GET home page. */
 router.use("/users", require("./users"));
-//router.use("/palettes", require("./palette"));
+router.use("/palettes", require("./palette"));
+router.use("/colors", require("./color"));
 
 //"main" api route
 router.get("/", function(req, res, next) {
