@@ -25,16 +25,15 @@ class App extends Component {
     }
   }
   makeChart(data) {
-    return makeAnimatedChart(data);
+    //return makeAnimatedChart(data);
   }
 
   render() {
-    const colorData = this.state.colors;
-    let myChart;
-    if (this.state.colors.length) {
-      myChart = this.makeChart(this.state.colors);
-      console.log(myChart);
-    }
+    // const colorData = this.state.colors;
+    // let myChart;
+    // if (this.state.colors.length && this.state.done === false) {
+    //   this.makeChart(this.state.colors);
+    // }
     // this.state.colors.length && this.makeChart(this.state.colors);
     return (
       <div className="App">
@@ -44,7 +43,7 @@ class App extends Component {
             <div key={color.id}>{color.name}</div>
           ))}
         </div>
-        <div className="mycharts">{this.state.colors.length && myChart}</div>
+        {/* <div className="mycharts">{this.state.colors.length && myChart}</div> */}
       </div>
     );
   }

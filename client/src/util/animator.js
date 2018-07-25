@@ -27,6 +27,7 @@ export default function animator(WrappedComponent, animationConfig) {
   console.log("MAKING CHARTS");
   return class Animated extends React.Component {
     constructor() {
+      console.log("COMPONENTTTT");
       super();
       this.state = {
         // This starting data will all be zeroed for the start of the animation
