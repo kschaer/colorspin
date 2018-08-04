@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ColorPicker from "./ColorPicker";
 
 class Main extends Component {
   constructor() {
@@ -11,6 +12,7 @@ class Main extends Component {
       <div>
         <div>MAINNNNNN</div>
         <div>colorsss</div>
+        <ColorPicker />
       </div>
     );
   }
