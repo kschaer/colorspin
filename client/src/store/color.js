@@ -25,7 +25,7 @@ export const fetchColor = color => {
 export const fetchAllColors = () => {
   return async dispatch => {
     try {
-      const respone = await axios.get("/api/colors");
+      const response = await axios.get("/api/colors");
       const colors = response.data;
       dispatch(getAllColors(colors));
     } catch (err) {
