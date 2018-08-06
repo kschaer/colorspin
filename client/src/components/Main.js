@@ -2,35 +2,72 @@ import React, { Component } from "react";
 import axios from "axios";
 import ColorPicker from "./ColorPicker";
 import { SketchPicker } from "react-color";
-import { css } from "emotion";
+import { css, keyframes } from "emotion";
+import { connect } from "react-redux";
+import spring from "spring-keyframes";
 
+const springOptions = {
+  stiffness: 0.8,
+  damping: 0.5,
+  precision: 4,
+  unit: "px"
+};
 class Main extends Component {
   constructor() {
     super();
     this.state = {
-      bgColor: "aliceblue"
+      bgColor: "aliceblue",
+      animate: ""
     };
-    this.handlePickerChange = this.handlePickerChange.bind(this);
+    //this.handlePickerChange = this.handlePickerChange.bind(this);
   }
   componentDidMount() {}
-  handlePickerChange = color => {
-    console.log("COLOR", color);
-    this.setState({ bgColor: color.hex });
-  };
+  // handlePickerChange = (color, event) => {
+  //   event.preventDefault();
+  //   console.log("COLOR", color);
+  //   this.setState({ bgColor: color.hex });
+  //   const animator = keyframes`
+  //     0% {backgroundColor: ${color.hex}}
+  //     100% {backgroundColor: #90000}
+  //   `;
+  //   this.setState({ animate: animator });
+  // };
+
   render() {
+    const animator = keyframes`
+      0% {background-color: ${this.props.lastColor}}
+      100% {background-color: #FFFFFF}
+    `;
+    const bounce = keyframes`
+  0% {
+    background-color: #FFFFFF
+  }
+  10% {
+    background-color: ${this.props.bgColor}
+  }
+  100% {
+    background-color: #FFFFFF
+  }
+`;
+    const cssAnimated = ``;
+    console.log("NEW NEW", this.props.bgColor, this.props.lastColor);
     return (
-      <div>
-        <div
-          className={css({
-            display: "flex",
-            backgroundColor: "lightGray",
-            "&:hover": {
-              backgroundColor: this.state.bgColor
-            }
-          })}
-        >
-          <div>MAINNNNNN</div>
-          <div>colorsss</div>
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+        `}
+      >
+        <div>
+          <div
+            className={css`
+              animation: ${bounce} 2s ease;
+              background-color: #ffffff;
+              padding: 40px;
+            `}
+          >
+            MAINNNNNN
+          </div>
         </div>
         <div>
           {/* <SketchPicker onChangeComplete={this.handlePickerChange} /> */}
@@ -40,4 +77,10 @@ class Main extends Component {
     );
   }
 }
-export default Main;
+const mapState = state => {
+  return {
+    bgColor: state.color.curColors[state.color.curColors.length - 1],
+    lastColor: state.color.lastColor
+  };
+};
+export default connect(mapState)(Main);

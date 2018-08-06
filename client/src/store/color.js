@@ -6,7 +6,8 @@ const SET_NEW_COLOR = "SET_NEW_COLOR";
 const initialState = {
   color: {},
   allColors: [],
-  curColors: []
+  curColors: [],
+  lastColor: ""
 };
 
 const getColor = color => ({ type: GET_COLOR, color });
@@ -44,7 +45,11 @@ export default (state = initialState, action) => {
     case GET_ALL_COLORS:
       return { ...state, colors: action.colors };
     case SET_NEW_COLOR:
-      return { ...state, curColors: [...state.curColors, action.color] };
+      return {
+        ...state,
+        curColors: [...state.curColors, action.color],
+        lastColor: action.color
+      };
     default:
       return state;
   }
