@@ -1,14 +1,17 @@
 import axios from "axios";
 const GET_COLOR = "GET_COLOR";
 const GET_ALL_COLORS = "GET_ALL_COLORS";
+const SET_NEW_COLOR = "SET_NEW_COLOR";
 
 const initialState = {
   color: {},
-  allColors: []
+  allColors: [],
+  curColors: []
 };
 
 const getColor = color => ({ type: GET_COLOR, color });
 const getAllColors = colors => ({ type: GET_ALL_COLORS, colors });
+export const setNewColor = color => ({ type: SET_NEW_COLOR, color });
 
 export const fetchColor = color => {
   return async dispatch => {
@@ -40,6 +43,8 @@ export default (state = initialState, action) => {
       return { ...state, color: action.color };
     case GET_ALL_COLORS:
       return { ...state, colors: action.colors };
+    case SET_NEW_COLOR:
+      return { ...state, curColors: [...state.curColors, action.color] };
     default:
       return state;
   }
