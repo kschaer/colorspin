@@ -37,7 +37,6 @@ class ThreeCanvas extends React.Component {
     const width = window.innerWidth;
     const height = window.innerHeight; // canvas height
     const lastColor = this.props.lastColor.hex || "#FFCCAA";
-    console.log(this.props.width, this.props.height);
     //    const { width, height } = this.props;
 
     return (

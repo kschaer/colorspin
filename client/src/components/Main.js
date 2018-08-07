@@ -8,6 +8,8 @@ import ContainerDimensions from "react-container-dimensions";
 
 import ThreeCanvas from "./ThreeCanvas";
 
+import { removeColor } from "../store/color";
+
 class Main extends Component {
   constructor() {
     super();
@@ -16,7 +18,7 @@ class Main extends Component {
       animate: "",
       hovered: ""
     };
-    //this.handlePickerChange = this.handlePickerChange.bind(this);
+    this.removeColor = this.removeColor.bind(this);
   }
   componentDidMount() {}
   // handlePickerChange = (color, event) => {
@@ -29,7 +31,11 @@ class Main extends Component {
   //   `;
   //   this.setState({ animate: animator });
   // };
-  onMouseOver(event) {}
+  removeColor(color) {
+    //event.preventDefault;
+    console.log("REMOVING", color);
+    this.props.removeColor(color);
+  }
 
   render() {
     return (
@@ -39,42 +45,72 @@ class Main extends Component {
             <Navbar />
           </div>
           <div className="row">
-            <div className="col s2">
+            <div className="col s3">
               <div className="column">
                 {this.props.curColors && this.props.curColors.length
                   ? this.props.curColors.map((color, index) => {
                       const animator = keyframes`
                         0% {
                           background-color: ${color.hex};
-                          border: solid .2em ${color.hex}
+                          border: solid .6em ${color.hex}
                         }
                         14% {
-                          background-color: #000000;
-                          border: solid .2em #ffffff
+                          background-color: #FFFFFF;
+                          border: solid .6em #00000022
 
                         }
                         100% {
                           background-color: ${color.hex};
-                          border: solid .2em ${color.hex}
+                          border: solid .6em ${color.hex}
                         }
                       `;
                       return (
                         <div
                           key={color.rgb.r + index}
-                          className={`chip waves-effect waves-light ${css`
+                          className={`row waves-effect waves-light valign-wrapper ${css`
                             z-index: 5;
-                            border: solid 0.2em ${color.hex};
+                            border: solid 0.6em #ffffff22;
                             background-color: ${color.hex};
+                            border-radius: 2em;
+                            width: 100%;
+                            height: ${Math.min(
+                              80,
+                              (window.innerHeight - 300) /
+                                this.props.curColors.length
+                            )}px;
                             &:hover {
                               animation: ${animator} 1s ease;
                             }
                           `}`}
                         >
-                          {color.hex}
-                          <i
-                            className={`close material-icons ${css`
+                          <p
+                            className={`col s8 valign ${css`
                               z-index: 10;
+                              margin: 0px;
+                              padding: 0px;
+                              float: left;
+                              width: 100%;
+                              position: absolute;
+                              top: 50%;
+                              transform: translateY(-50%) translateX(10%);
+                              left: 50%;
                             `}`}
+                          >
+                            {color.hex}
+                          </p>
+                          <i
+                            className={`material-icons col s4 ${css`
+                              z-index: 8;
+                              margin: 0px;
+                              padding: 0px;
+                              float: left;
+                              width: 100%;
+                              position: absolute;
+                              top: 50%;
+                              transform: translateY(-50%) translateX(200%);
+                              left: 50%;
+                            `}`}
+                            onClick={event => this.removeColor(color, event)}
                           >
                             close
                           </i>
@@ -84,7 +120,7 @@ class Main extends Component {
                   : null}
               </div>
             </div>
-            <div className="col s6" />
+            <div className="col s5" />
             <div id="picker" className="col s4 right-align">
               <ColorPicker />
             </div>
@@ -113,4 +149,12 @@ const mapState = state => {
     curColors: state.color.curColors
   };
 };
-export default connect(mapState)(Main);
+const mapDispatch = dispatch => {
+  return {
+    removeColor: color => dispatch(removeColor(color))
+  };
+};
+export default connect(
+  mapState,
+  mapDispatch
+)(Main);
