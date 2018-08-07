@@ -13,7 +13,8 @@ class Main extends Component {
     super();
     this.state = {
       bgColor: "aliceblue",
-      animate: ""
+      animate: "",
+      hovered: ""
     };
     //this.handlePickerChange = this.handlePickerChange.bind(this);
   }
@@ -28,11 +29,9 @@ class Main extends Component {
   //   `;
   //   this.setState({ animate: animator });
   // };
+  onMouseOver(event) {}
 
   render() {
-    console.log("REFS", this.refs.child);
-    //    const { width } = this.props.size;
-    console.log("width", this.props.size);
     return (
       <div>
         <div className="container">
@@ -40,7 +39,60 @@ class Main extends Component {
             <Navbar />
           </div>
           <div className="row">
-            <div id="maincontainer" className="col sm4">
+            <div className="col s2">
+              <div className="column">
+                {this.props.curColors && this.props.curColors.length
+                  ? this.props.curColors.map((color, index) => {
+                      const animator = keyframes`
+                        0% {
+                          background-color: ${color.hex};
+                          width: 100%;
+                        }
+                        14% {
+                          background-color: #FFFFFF;
+                          width: 175%;
+                        }
+                        100% {
+                          background-color: ${color.hex};
+                          width: 100%;
+                        }
+                      `;
+                      const focused = keyframes`
+                        0% {
+                          background-color: ${color.hex};
+                          width: 100%;
+                        }
+                        14% {
+                          background-color: red;
+                          width: 175%;
+                        }
+                        100% {
+                          background-color: ${color.hex};
+                          width: 175%;
+                        }
+                      `;
+                      return (
+                        <div
+                          className={css`
+                            background-color: ${color.hex};
+                            padding: 4px;
+                            border-width: 3px;
+                            border-color: red;
+                            &:hover {
+                              animation: ${animator} 1s ease;
+                            }
+                          `}
+                          key={color.hex}
+                        >
+                          <p key={color.hex + index}>{color.hex}</p>
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+            </div>
+            <div className="col s6" />
+            <div id="picker" className="col s4 right-align">
               <ColorPicker />
             </div>
           </div>
@@ -64,7 +116,8 @@ class Main extends Component {
 const mapState = state => {
   return {
     bgColor: state.color.curColors[state.color.curColors.length - 1],
-    lastColor: state.color.lastColor
+    lastColor: state.color.lastColor,
+    curColors: state.color.curColors
   };
 };
 export default connect(mapState)(Main);

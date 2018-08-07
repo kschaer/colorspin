@@ -16,14 +16,12 @@ class ColorPicker extends React.Component {
   };
   render() {
     return (
-      <div>
-        <SketchPicker
-          disableAlpha={false}
-          onChangeComplete={this.handleChange}
-          color={this.props.lastColor.hsl}
-        />
-        <div>hiiiiii</div>
-      </div>
+      <SketchPicker
+        disableAlpha={false}
+        onChangeComplete={this.handleChange}
+        color={this.props.lastColor.hsl}
+        style={{ background: "rgba(100, 100, 100, .3)" }}
+      />
     );
   }
 }

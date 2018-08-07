@@ -20,7 +20,7 @@ const Navbar = props => {
     animation: ${colorBounce} 1s ease;
   `;
   return (
-    <div className={`container ${colorBounceCss}`}>
+    <div className={`${colorBounceCss}`}>
       <div className={`row`}>
         <div className="col s4 center-align">
           <NavLink to="/browse">
