@@ -46,11 +46,11 @@ class Main extends Component {
                       const animator = keyframes`
                         0% {
                           background-color: ${color.hex};
+
                         }
                         14% {
                           background-color: #FFFFFF;
-                          padding-top: 10px;
-                          padding-bottom: 10px;
+                          border: 0.3em solid #ffffff;
                         }
                         100% {
                           background-color: ${color.hex};
@@ -70,6 +70,23 @@ class Main extends Component {
                         //   key={color.hex}
                         // >
 
+                        // <div
+                        //   className={`chip waves-effect waves-light  ${css`
+                        //     background-color: ${color.hex};
+                        //     border: 0.3em solid ${color.hex};
+                        //     border-radius: 30px;
+                        //     margin: auto;
+                        //     padding: auto;
+                        //     &:hover {
+                        //       animation: ${animator} 1s ease;
+                        //     }
+                        //   `}`}
+                        // >
+                        //   {color.hex}
+                        //   <i className="close material-icons">close</i>
+                        // </div>
+                        // <p key={color.hex + index}>{color.hex}</p>
+                        //</div>
                         <div
                           className={`chip waves-effect waves-light ${css`
                             background-color: ${color.hex};
@@ -78,8 +95,6 @@ class Main extends Component {
                           {color.hex}
                           <i className="close material-icons">close</i>
                         </div>
-                        // <p key={color.hex + index}>{color.hex}</p>
-                        //</div>
                       );
                     })
                   : null}
