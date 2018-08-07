@@ -1,43 +1,43 @@
 import React, { Component } from "react";
-import { css } from "emotion";
+import { css, keyframes } from "emotion";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Navbar = props => {
-  const buttonCss = css`
-    background-color: #cee2e0;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: ${props.lastColor.hex};
-    text-transform: capitalize;
-    padding: 0px 30px;
-  `;
-  const linkCss = css`
-    background-color: #FF00AA
-    text-transform: capitalize;
-    :visited {
-      text-decoration: none;
-    }
+  const lastColor = props.lastColor.hex || "#FFAABB";
+  const colorBounce = keyframes`
+  0% {
+    background-color: #000000
+  }
+  10% {
+    background-color: ${lastColor}
+  }
+  100% {
+    background-color: #000000
+  }
+`;
+  const colorBounceCss = css`
+    animation: ${colorBounce} 1s ease;
   `;
   return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        padding: 20px;
-        background-color: #bac8cf;
-      `}
-    >
-      <NavLink className={buttonCss} to="/browse">
-        <h3 className={linkCss}>browse</h3>
-      </NavLink>
-      <NavLink className={buttonCss} to="/random">
-        <h3>randomize</h3>
-      </NavLink>
-      <NavLink className={buttonCss} to="/export">
-        <h3>export</h3>
-      </NavLink>
+    <div className={`container ${colorBounceCss}`}>
+      <div className={`row`}>
+        <div className="col s4 center-align">
+          <NavLink to="/browse">
+            <h5>browse</h5>
+          </NavLink>
+        </div>
+        <div className="col s4 center-align">
+          <NavLink to="/random">
+            <h5>randomize</h5>
+          </NavLink>
+        </div>
+        <div className="col s4 center-align">
+          <NavLink to="/export">
+            <h5>export</h5>
+          </NavLink>
+        </div>
+      </div>
     </div>
   );
 };

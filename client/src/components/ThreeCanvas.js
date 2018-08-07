@@ -32,9 +32,13 @@ class ThreeCanvas extends React.Component {
   }
 
   render() {
-    const width = window.innerWidth * 0.8; // canvas width
-    const height = window.innerHeight * 0.8; // canvas height
+    // const width = this.refs.child.parentNode.clientWidth; // canvas width
+    //console.log(this.refs.child.node);
+    const width = window.innerWidth;
+    const height = window.innerHeight; // canvas height
     const lastColor = this.props.lastColor.hex || "#FFCCAA";
+    console.log(this.props.width, this.props.height);
+    //    const { width, height } = this.props;
 
     return (
       <React3

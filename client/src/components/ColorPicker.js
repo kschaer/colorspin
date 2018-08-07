@@ -22,16 +22,7 @@ class ColorPicker extends React.Component {
           onChangeComplete={this.handleChange}
           color={this.props.lastColor.hsl}
         />
-        <div
-          className={css({
-            backgroundColor: "pink",
-            "&:hover": {
-              backgroundColor: "lightgreen"
-            }
-          })}
-        >
-          hiiiiii
-        </div>
+        <div>hiiiiii</div>
       </div>
     );
   }

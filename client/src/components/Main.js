@@ -4,6 +4,7 @@ import ColorPicker from "./ColorPicker";
 import { css, keyframes } from "emotion";
 import { connect } from "react-redux";
 import Navbar from "./Navbar";
+import ContainerDimensions from "react-container-dimensions";
 
 import ThreeCanvas from "./ThreeCanvas";
 
@@ -29,58 +30,32 @@ class Main extends Component {
   // };
 
   render() {
-    const bounce = keyframes`
-  0% {
-    background-color: #FFFFFF
-  }
-  10% {
-    background-color: ${this.props.lastColor.hex}
-  }
-  100% {
-    background-color: #FFFFFF
-  }
-`;
-    const cssAnimated = ``;
-    console.log("NEW NEW", this.props.lastColor, this.props.lastColor);
+    console.log("REFS", this.refs.child);
+    //    const { width } = this.props.size;
+    console.log("width", this.props.size);
     return (
-      <div
-        className={css`
-          display: flex;
-          flex-direction: column;
-        `}
-      >
-        <div>
-          <Navbar />
-        </div>
-        <div>
-          <div
-            id="maincontainer"
-            className={css`
-              display: flex;
-              animation: ${bounce} 2s ease;
-              background-color: #ffffff;
-              padding: 40px;
-              flex-direction: row;
-              align-items: stretch;
-
-              justify-content: center;
-            `}
-          >
-            {/* <SketchPicker onChangeComplete={this.handlePickerChange} /> */}
-            <ColorPicker
-              className={css`
-                flex-grow: 1;
-              `}
-            />
-            {/* <Paperview
-              className={css`
-                flex-grow: 4;
-                background-color: #ff00cc;
-              `}
-            /> */}
-            {/* <Papery /> */}
-            <ThreeCanvas />
+      <div>
+        <div className="container">
+          <div>
+            <Navbar />
           </div>
+          <div className="row">
+            <div id="maincontainer" className="col sm4">
+              <ColorPicker />
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            margin: 0,
+            padding: 0,
+            zIndex: -1000
+          }}
+        >
+          <ThreeCanvas />
         </div>
       </div>
     );
