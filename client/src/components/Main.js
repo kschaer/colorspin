@@ -46,54 +46,38 @@ class Main extends Component {
                       const animator = keyframes`
                         0% {
                           background-color: ${color.hex};
-
+                          border: solid .2em ${color.hex}
                         }
                         14% {
-                          background-color: #FFFFFF;
-                          border: 0.3em solid #ffffff;
+                          background-color: #000000;
+                          border: solid .2em #ffffff
+
                         }
                         100% {
                           background-color: ${color.hex};
+                          border: solid .2em ${color.hex}
                         }
                       `;
                       return (
-                        // <div
-                        //   className={css`
-                        //     background-color: ${color.hex};
-                        //     padding: 4px;
-                        //     border-width: 3px;
-                        //     border-color: red;
-                        //     &:hover {
-                        //       animation: ${animator} 1s ease;
-                        //     }
-                        //   `}
-                        //   key={color.hex}
-                        // >
-
-                        // <div
-                        //   className={`chip waves-effect waves-light  ${css`
-                        //     background-color: ${color.hex};
-                        //     border: 0.3em solid ${color.hex};
-                        //     border-radius: 30px;
-                        //     margin: auto;
-                        //     padding: auto;
-                        //     &:hover {
-                        //       animation: ${animator} 1s ease;
-                        //     }
-                        //   `}`}
-                        // >
-                        //   {color.hex}
-                        //   <i className="close material-icons">close</i>
-                        // </div>
-                        // <p key={color.hex + index}>{color.hex}</p>
-                        //</div>
                         <div
+                          key={color.rgb.r + index}
                           className={`chip waves-effect waves-light ${css`
+                            z-index: 5;
+                            border: solid 0.2em ${color.hex};
                             background-color: ${color.hex};
+                            &:hover {
+                              animation: ${animator} 1s ease;
+                            }
                           `}`}
                         >
                           {color.hex}
-                          <i className="close material-icons">close</i>
+                          <i
+                            className={`close material-icons ${css`
+                              z-index: 10;
+                            `}`}
+                          >
+                            close
+                          </i>
                         </div>
                       );
                     })
