@@ -4,8 +4,7 @@ import ColorPicker from "./ColorPicker";
 import { SketchPicker } from "react-color";
 import { css, keyframes } from "emotion";
 import { connect } from "react-redux";
-import spring from "spring-keyframes";
-
+import Navbar from "./Navbar";
 const springOptions = {
   stiffness: 0.8,
   damping: 0.5,
@@ -34,23 +33,19 @@ class Main extends Component {
   // };
 
   render() {
-    const animator = keyframes`
-      0% {background-color: ${this.props.lastColor}}
-      100% {background-color: #FFFFFF}
-    `;
     const bounce = keyframes`
   0% {
     background-color: #FFFFFF
   }
   10% {
-    background-color: ${this.props.bgColor}
+    background-color: ${this.props.lastColor.hex}
   }
   100% {
     background-color: #FFFFFF
   }
 `;
     const cssAnimated = ``;
-    console.log("NEW NEW", this.props.bgColor, this.props.lastColor);
+    console.log("NEW NEW", this.props.lastColor, this.props.lastColor);
     return (
       <div
         className={css`
@@ -59,19 +54,22 @@ class Main extends Component {
         `}
       >
         <div>
+          <Navbar />
+        </div>
+        <div>
           <div
+            id="maincontainer"
             className={css`
               animation: ${bounce} 2s ease;
               background-color: #ffffff;
               padding: 40px;
             `}
           >
-            MAINNNNNN
+            <div>
+              {/* <SketchPicker onChangeComplete={this.handlePickerChange} /> */}
+              <ColorPicker />
+            </div>
           </div>
-        </div>
-        <div>
-          {/* <SketchPicker onChangeComplete={this.handlePickerChange} /> */}
-          <ColorPicker />
         </div>
       </div>
     );

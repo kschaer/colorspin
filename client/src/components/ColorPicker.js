@@ -12,14 +12,15 @@ class ColorPicker extends React.Component {
   handleChange = (color, event) => {
     event.preventDefault();
     console.log("new color,", color);
-    this.props.setNewColor(color.hex);
+    this.props.setNewColor(color);
   };
   render() {
     return (
       <div>
         <SketchPicker
+          disableAlpha={false}
           onChangeComplete={this.handleChange}
-          color={this.props.lastColor}
+          color={this.props.lastColor.hsl}
         />
         <div
           className={css({
@@ -38,7 +39,7 @@ class ColorPicker extends React.Component {
 const mapState = state => {
   return {
     curColors: state.color.curColors,
-    lastColor: state.color.curColors[state.color.curColors.length - 1]
+    lastColor: state.color.lastColor
   };
 };
 const mapDispatch = dispatch => {

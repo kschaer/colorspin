@@ -7,7 +7,9 @@ const initialState = {
   color: {},
   allColors: [],
   curColors: [],
-  lastColor: ""
+  lastColor: {
+    hex: ""
+  }
 };
 
 const getColor = color => ({ type: GET_COLOR, color });
