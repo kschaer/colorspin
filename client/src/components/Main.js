@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ColorPicker from "./ColorPicker";
-import { SketchPicker } from "react-color";
 import { css, keyframes } from "emotion";
 import { connect } from "react-redux";
 import Navbar from "./Navbar";
-const springOptions = {
-  stiffness: 0.8,
-  damping: 0.5,
-  precision: 4,
-  unit: "px"
-};
+import Paperview from "./Paperview";
+import Papery from "./Papery";
+import ThreeCanvas from "./ThreeCanvas"
+
 class Main extends Component {
   constructor() {
     super();
@@ -60,15 +57,30 @@ class Main extends Component {
           <div
             id="maincontainer"
             className={css`
+              display: flex;
               animation: ${bounce} 2s ease;
               background-color: #ffffff;
               padding: 40px;
+              flex-direction: row;
+              align-items: stretch;
+
+              justify-content: center;
             `}
           >
-            <div>
-              {/* <SketchPicker onChangeComplete={this.handlePickerChange} /> */}
-              <ColorPicker />
-            </div>
+            {/* <SketchPicker onChangeComplete={this.handlePickerChange} /> */}
+            <ColorPicker
+              className={css`
+                flex-grow: 1;
+              `}
+            />
+            {/* <Paperview
+              className={css`
+                flex-grow: 4;
+                background-color: #ff00cc;
+              `}
+            /> */}
+            {/* <Papery /> */}
+            <ThreeCanvas />
           </div>
         </div>
       </div>

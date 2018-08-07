@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./App.css";
-import { Main, Navbar } from "./components";
+import { Main } from "./components";
 
 import makeAnimatedChart from "./ColorChart";
 
