@@ -8,14 +8,15 @@ import ContainerDimensions from "react-container-dimensions";
 
 import ThreeCanvas from "./ThreeCanvas";
 
-import { removeColor } from "../store/color";
+import { removeColor, reorderColors } from "../store/color";
 import {
   SortableContainer,
   SortableElement,
   arrayMove
 } from "react-sortable-hoc";
 
-const SortableItem = SortableElement(color => {
+const SortableItem = SortableElement(props => {
+  const { color, removeColor, curColors } = props;
   const animator = keyframes`
                         0% {
                           background-color: ${color.hex};
@@ -39,7 +40,10 @@ const SortableItem = SortableElement(color => {
         background-color: ${color.hex};
         border-radius: 2em;
         width: 100%;
-        height: ${Math.min(80, (window.innerHeight - 300) / 1)}px;
+        height: ${Math.min(
+          80,
+          (window.innerHeight - 300) / curColors.length
+        )}px;
         &:hover {
           animation: ${animator} 1s ease;
         }
@@ -72,7 +76,7 @@ const SortableItem = SortableElement(color => {
           transform: translateY(-50%) translateX(200%);
           left: 50%;
         `}`}
-        onClick={event => this.removeColor(color, event)}
+        onClick={event => removeColor(color, event)}
       >
         close
       </i>
@@ -80,11 +84,17 @@ const SortableItem = SortableElement(color => {
   );
 });
 
-const SortableList = SortableContainer(({ items }) => {
+const SortableList = SortableContainer(props => {
+  const { curColors } = props;
   return (
     <ul>
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
+      {curColors.map((color, index) => (
+        <SortableItem
+          key={`item-${index}`}
+          index={index}
+          color={color}
+          {...props}
+        />
       ))}
     </ul>
   );
@@ -105,26 +115,20 @@ class Main extends Component {
   componentDidMount() {
     this.setState({ currentColors: this.props.curColors });
   }
-  // handlePickerChange = (color, event) => {
-  //   event.preventDefault();
-  //   console.log("COLOR", color);
-  //   this.setState({ bgColor: color.hex });
-  //   const animator = keyframes`
-  //     0% {backgroundColor: ${color.hex}}
-  //     100% {backgroundColor: #90000}
-  //   `;
-  //   this.setState({ animate: animator });
-  // };
+
   removeColor(color) {
     //event.preventDefault;
     console.log("REMOVING", color);
     this.props.removeColor(color);
   }
-  onSortEnd(oldIndex, newIndex) {
-    this.setState({
-      currentColors: arrayMove(this.state.currentColors, oldIndex, newIndex)
-    });
-  }
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    // this.setState({
+    //   currentColors: arrayMove(this.state.currentColors, oldIndex, newIndex)
+    // });
+    const newOrder = arrayMove(this.props.curColors, oldIndex, newIndex);
+    console.log("NEW ORDER");
+    this.props.reorderColors(newOrder);
+  };
 
   render() {
     if (
@@ -217,7 +221,11 @@ class Main extends Component {
             </div>
             <div className="col s5">
               {this.state.currentColors.length && (
-                <SortableList items={this.state.currentColors} />
+                <SortableList
+                  onSortEnd={this.onSortEnd}
+                  items={this.state.currentColors}
+                  {...this.props}
+                />
               )}
             </div>
             <div id="picker" className="col s4 right-align">
@@ -250,7 +258,8 @@ const mapState = state => {
 };
 const mapDispatch = dispatch => {
   return {
-    removeColor: color => dispatch(removeColor(color))
+    removeColor: color => dispatch(removeColor(color)),
+    reorderColors: colors => dispatch(reorderColors(colors))
   };
 };
 export default connect(
