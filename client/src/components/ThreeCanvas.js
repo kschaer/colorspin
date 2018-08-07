@@ -32,8 +32,9 @@ class ThreeCanvas extends React.Component {
   }
 
   render() {
-    const width = window.innerWidth; // canvas width
-    const height = window.innerHeight; // canvas height
+    const width = window.innerWidth * 0.8; // canvas width
+    const height = window.innerHeight * 0.8; // canvas height
+    const lastColor = this.props.lastColor.hex || "#FFCCAA";
 
     return (
       <React3
@@ -53,7 +54,7 @@ class ThreeCanvas extends React.Component {
           />
           <mesh rotation={this.state.cubeRotation}>
             <boxGeometry width={1} height={1} depth={1} />
-            <meshBasicMaterial color={0x00ff00} />
+            <meshBasicMaterial color={lastColor} />
           </mesh>
         </scene>
       </React3>

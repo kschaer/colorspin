@@ -4,9 +4,8 @@ import ColorPicker from "./ColorPicker";
 import { css, keyframes } from "emotion";
 import { connect } from "react-redux";
 import Navbar from "./Navbar";
-import Paperview from "./Paperview";
-import Papery from "./Papery";
-import ThreeCanvas from "./ThreeCanvas"
+
+import ThreeCanvas from "./ThreeCanvas";
 
 class Main extends Component {
   constructor() {
