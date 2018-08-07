@@ -9,6 +9,86 @@ import ContainerDimensions from "react-container-dimensions";
 import ThreeCanvas from "./ThreeCanvas";
 
 import { removeColor } from "../store/color";
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove
+} from "react-sortable-hoc";
+
+const SortableItem = SortableElement(color => {
+  const animator = keyframes`
+                        0% {
+                          background-color: ${color.hex};
+                          border: solid .6em ${color.hex}
+                        }
+                        14% {
+                          background-color: #FFFFFF;
+                          border: solid .6em #00000022
+
+                        }
+                        100% {
+                          background-color: ${color.hex};
+                          border: solid .6em ${color.hex}
+                        }
+                      `;
+  return (
+    <div
+      className={`row waves-effect waves-light valign-wrapper ${css`
+        z-index: 5;
+        border: solid 0.6em #ffffff22;
+        background-color: ${color.hex};
+        border-radius: 2em;
+        width: 100%;
+        height: ${Math.min(80, (window.innerHeight - 300) / 1)}px;
+        &:hover {
+          animation: ${animator} 1s ease;
+        }
+      `}`}
+    >
+      <p
+        className={`col s8 valign ${css`
+          z-index: 10;
+          margin: 0px;
+          padding: 0px;
+          float: left;
+          width: 100%;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%) translateX(10%);
+          left: 50%;
+        `}`}
+      >
+        {color.hex}
+      </p>
+      <i
+        className={`material-icons col s4 ${css`
+          z-index: 8;
+          margin: 0px;
+          padding: 0px;
+          float: left;
+          width: 100%;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%) translateX(200%);
+          left: 50%;
+        `}`}
+        onClick={event => this.removeColor(color, event)}
+      >
+        close
+      </i>
+    </div>
+  );
+});
+
+const SortableList = SortableContainer(({ items }) => {
+  return (
+    <ul>
+      {items.map((value, index) => (
+        <SortableItem key={`item-${index}`} index={index} value={value} />
+      ))}
+    </ul>
+  );
+});
 
 class Main extends Component {
   constructor() {
@@ -16,11 +96,15 @@ class Main extends Component {
     this.state = {
       bgColor: "aliceblue",
       animate: "",
-      hovered: ""
+      hovered: "",
+      currentColors: []
     };
     this.removeColor = this.removeColor.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({ currentColors: this.props.curColors });
+  }
   // handlePickerChange = (color, event) => {
   //   event.preventDefault();
   //   console.log("COLOR", color);
@@ -36,8 +120,19 @@ class Main extends Component {
     console.log("REMOVING", color);
     this.props.removeColor(color);
   }
+  onSortEnd(oldIndex, newIndex) {
+    this.setState({
+      currentColors: arrayMove(this.state.currentColors, oldIndex, newIndex)
+    });
+  }
 
   render() {
+    if (
+      this.props.curColors &&
+      this.props.curColors.length !== this.state.currentColors.length
+    ) {
+      this.setState({ currentColors: this.props.curColors });
+    }
     return (
       <div>
         <div className="container">
@@ -120,7 +215,11 @@ class Main extends Component {
                   : null}
               </div>
             </div>
-            <div className="col s5" />
+            <div className="col s5">
+              {this.state.currentColors.length && (
+                <SortableList items={this.state.currentColors} />
+              )}
+            </div>
             <div id="picker" className="col s4 right-align">
               <ColorPicker />
             </div>
