@@ -1,6 +1,6 @@
 import React from "react";
 import * as THREE from "three";
-
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 class PickableMesh extends React.Component {
@@ -38,7 +38,7 @@ class PickableMesh extends React.Component {
   };
 
   render() {
-    const { position, quaternion } = this.props;
+    const { position, quaternion, hexColor } = this.props;
 
     return (
       <mesh
@@ -49,7 +49,7 @@ class PickableMesh extends React.Component {
         onMouseDown={this._onMouseDown}
       >
         <geometryResource resourceId="cubeGeo" />
-        <materialResource resourceId="cubeMaterial" />
+        <meshBasicMaterial color={hexColor} />
       </mesh>
     );
   }

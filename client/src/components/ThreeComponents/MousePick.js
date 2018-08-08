@@ -1,6 +1,7 @@
 import React from "react";
 import React3 from "react-three-renderer";
 import * as THREE from "three";
+import { connect } from "react-redux";
 import CANNON from "cannon/src/Cannon";
 
 import MouseInput from "./MouseInput";
@@ -155,7 +156,6 @@ class PhysicsMousePick extends ExampleBase {
     this.state = {
       clickMarkerVisible: false,
       clickMarkerPosition: new THREE.Vector3(),
-
       meshStates: _getMeshStates()
     };
 
@@ -265,16 +265,24 @@ class PhysicsMousePick extends ExampleBase {
 
     const d = 20;
 
-    const cubeMeshes = meshStates.map(({ position, quaternion }, i) => (
-      <PickableMesh
-        key={i}
-        position={position}
-        quaternion={quaternion}
-        bodyIndex={i}
-        meshes={this.meshes}
-        onMouseDown={this._onMeshMouseDown}
-      />
-    ));
+    const cubeMeshes = meshStates.map(({ position, quaternion }, i) => {
+      let hexColor = "CCAAFF";
+      if (this.props.curColors && this.props.curColors.length) {
+        const { curColors } = this.props;
+        hexColor = curColors[i % curColors.length].hex;
+      }
+      return (
+        <PickableMesh
+          hexColor={hexColor}
+          key={i}
+          position={position}
+          quaternion={quaternion}
+          bodyIndex={i}
+          meshes={this.meshes}
+          onMouseDown={this._onMeshMouseDown}
+        />
+      );
+    });
 
     return (
       <div ref="container">
@@ -355,5 +363,9 @@ class PhysicsMousePick extends ExampleBase {
     );
   }
 }
-
-export default PhysicsMousePick;
+const mapState = state => {
+  return {
+    curColors: state.color.curColors
+  };
+};
+export default connect(mapState)(PhysicsMousePick);
