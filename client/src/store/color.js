@@ -4,11 +4,13 @@ const GET_ALL_COLORS = "GET_ALL_COLORS";
 const SET_NEW_COLOR = "SET_NEW_COLOR";
 const REMOVE_COLOR = "REMOVE_COLOR";
 const REORDER_COLORS = "REORDER_COLORS";
+const SET_ACTIVE_COLOR = "SET_ACTIVE_COLOR";
 
 const initialState = {
   color: {},
   allColors: [],
   curColors: [],
+  activeColor: {},
   lastColor: {
     hex: ""
   }
@@ -22,6 +24,7 @@ export const removeColor = color => ({
   color
 });
 export const reorderColors = colors => ({ type: REORDER_COLORS, colors });
+export const setActiveColor = color => ({ type: SET_ACTIVE_COLOR, color });
 
 export const fetchColor = color => {
   return async dispatch => {
@@ -68,6 +71,8 @@ export default (state = initialState, action) => {
       };
     case REORDER_COLORS:
       return { ...state, curColors: action.colors };
+    case SET_ACTIVE_COLOR:
+      return { ...state, activeColor: action.color };
     default:
       return state;
   }
