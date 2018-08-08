@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import Navbar from "./Navbar";
 
 import ThreeCanvas from "./ThreeCanvas";
+import PhysicsMousePick from "./ThreeComponents/MousePick";
+import ExampleViewer from "./ThreeComponents/ExampleViewer";
 
 import { removeColor, reorderColors, setActiveColor } from "../store/color";
 
@@ -97,7 +99,11 @@ class Main extends Component {
             zIndex: -1000
           }}
         >
-          <ThreeCanvas />
+          {/* <ThreeCanvas /> */}
+          <ExampleViewer
+            example={PhysicsMousePick}
+            size={{ width: window.innerWidth, height: window.innerHeight }}
+          />
         </div>
       </div>
     );

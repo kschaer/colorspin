@@ -2,6 +2,7 @@ import React from "react";
 import React3 from "react-three-renderer";
 import * as THREE from "three";
 import { connect } from "react-redux";
+import MovingSphere from "./ThreeComponents/Sphere";
 
 class ThreeCanvas extends React.Component {
   constructor(props, context) {
@@ -59,6 +60,7 @@ class ThreeCanvas extends React.Component {
             <boxGeometry width={1} height={1} depth={1} />
             <meshBasicMaterial color={lastColor} />
           </mesh>
+          <MovingSphere />
         </scene>
       </React3>
     );

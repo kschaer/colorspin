@@ -5,6 +5,7 @@
   "dependencies": {
     "@psychobolt/react-paperjs": "0.0.53",
     "axios": "^0.18.0",
+    "cannon": "^0.6.2",
     "cheerio": "^1.0.0-rc.2",
     "d3-array": "^1.2.1",
     "d3-axis": "^1.0.8",
@@ -28,6 +29,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-sizeme": "^2.5.2",
     "react-sortable-hoc": "^0.8.3",
     "react-three-renderer": "^3.2.4",
     "redux": "^4.0.0",
@@ -35,6 +37,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "spring-keyframes": "^1.0.1",
+    "stats-js": "^1.0.0-alpha1",
     "three": "^0.86.0"
   },
   "scripts": {
